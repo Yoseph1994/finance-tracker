@@ -1,17 +1,25 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { AddTransaction } from "@/actions/transactions.action";
+import { useRef } from "react";
+import { toast } from "react-toastify";
 
 export default function AddTrancations() {
+  const formRef = useRef<HTMLFormElement>(null);
   const clientAction = async (formData: FormData) => {
-    console.log(formData);
+    const { data, error } = await AddTransaction(formData);
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success("transaction completed");
+      formRef.current?.reset();
+    }
   };
 
-  const { register, handleSubmit } = useForm();
   return (
     <>
       <h3>Add Transaction</h3>
-      <form action={clientAction}>
+      <form ref={formRef} action={clientAction}>
         <div className="form-control">
           <label htmlFor="text">Text</label>
           <input
