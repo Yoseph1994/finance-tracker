@@ -141,13 +141,22 @@ export async function getTransactions(): Promise<{
   }
 }
 
-export async function deleteTrancn(id: string) {
+export async function deleteTrancn(id: string): Promise<{
+  message?: string;
+  error?: string;
+}> {
+  const { userId } = await auth();
+  if (!userId) return { error: "User Not found" };
   try {
     await prisma.transaction.delete({
       where: {
         id,
+        userId,
       },
     });
     revalidatePath("/");
-  } catch (error) {}
+    return { message: "Transaction deleted" };
+  } catch (error) {
+    return { error: "Error in actions/deleteTrancn" };
+  }
 }

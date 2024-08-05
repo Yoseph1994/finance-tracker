@@ -2,13 +2,17 @@
 import { deleteTrancn } from "@/actions/transactions.action";
 import { Transaction } from "@/types/transaction";
 import { addCommas } from "@/utils/addCommas";
+import { toast } from "react-toastify";
 
 type TransactionItemProps = {
   transaction: Transaction;
 };
 export default function TransactionItem({ transaction }: TransactionItemProps) {
   async function handleDeleteTrancn(id: string) {
-    await deleteTrancn(id);
+    const { error, message } = await deleteTrancn(id);
+
+    if (error) return toast.error(error);
+    toast.success(message);
   }
 
   const sign = transaction.amount > 0 ? "+" : "-";
