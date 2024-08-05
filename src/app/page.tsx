@@ -1,3 +1,4 @@
+import AddTrancations from "@/components/AddTrancations";
 import Guest from "@/components/Guest";
 import { checkUser } from "@/utils/checkUsers";
 
@@ -9,6 +10,7 @@ async function Home() {
   return (
     <main>
       <h1>Welcome, {user.name}</h1>
+      <AddTrancations />
     </main>
   );
 }
