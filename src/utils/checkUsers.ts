@@ -20,7 +20,7 @@ export const checkUser = async () => {
       clerkUserId: user.id,
       email: user.emailAddresses[0].emailAddress,
       imageUrl: user.imageUrl,
-      name: `${user.firstName} ${user.lastName}`,
+      name: user.username,
     },
   });
 
